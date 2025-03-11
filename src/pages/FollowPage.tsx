@@ -12,13 +12,7 @@ const FollowPage: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Remove the data-loading attribute setup to prevent the loader
-    // document.documentElement.setAttribute('data-loading', '');
     document.documentElement.setAttribute('data-js', '');
-    
-    // Remove the load event handler since we're not setting data-loading anymore
-    // const handleLoad = () => document.documentElement.removeAttribute('data-loading');
-    // window.addEventListener('load', handleLoad);
     
     const handleWheel = (e: Event) => {
       e.stopPropagation();
@@ -29,38 +23,52 @@ const FollowPage: React.FC = () => {
       element.addEventListener('wheel', handleWheel);
     }
 
-    // Add active class to the appropriate child based on scroll position
+    // Set up IntersectionObserver to detect which slide is visible
     const scrollerElement = document.querySelector('.lg\\:absolute.\\-z-10');
-    const overlapElements = document.querySelectorAll('.overlap > *');
-    
     if (scrollerElement) {
-      const handleScroll = () => {
-        const scrollPosition = scrollerElement.scrollLeft;
-        const slideWidth = scrollerElement.clientWidth;
-        const activeSlideIndex = Math.round(scrollPosition / slideWidth);
-        
-        // Update active classes
-        overlapElements.forEach((el, index) => {
-          if (index === activeSlideIndex) {
-            el.classList.add('active');
-          } else {
-            el.classList.remove('active');
+      const slideElements = document.querySelectorAll('.snap-center');
+      const textElements = document.querySelectorAll('.overlap > div');
+      
+      // Create an observer for each slide
+      const observers = Array.from(slideElements).map((slide, index) => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                // When a slide is visible, show the corresponding text
+                textElements.forEach((textEl, textIndex) => {
+                  if (textIndex === index) {
+                    textEl.classList.add('active');
+                  } else {
+                    textEl.classList.remove('active');
+                  }
+                });
+              }
+            });
+          },
+          { 
+            root: scrollerElement,
+            threshold: 0.7 // Trigger when 70% of the slide is visible
           }
-        });
-      };
+        );
+        
+        observer.observe(slide);
+        return observer;
+      });
       
-      // Set initial active state
-      setTimeout(() => {
-        const firstChild = document.querySelector('.overlap > *:first-child');
-        if (firstChild) {
-          firstChild.classList.add('active');
-        }
-      }, 100);
-      
-      scrollerElement.addEventListener('scroll', handleScroll);
+      // Set first slide as active initially
+      if (textElements.length > 0) {
+        textElements[0].classList.add('active');
+      }
       
       return () => {
-        scrollerElement.removeEventListener('scroll', handleScroll);
+        // Clean up observers
+        observers.forEach((observer, index) => {
+          if (slideElements[index]) {
+            observer.unobserve(slideElements[index]);
+          }
+        });
+        
         document.documentElement.removeAttribute('data-js');
         
         if (element) {
@@ -70,9 +78,7 @@ const FollowPage: React.FC = () => {
     }
 
     return () => {
-      // document.documentElement.removeAttribute('data-loading');
       document.documentElement.removeAttribute('data-js');
-      // window.removeEventListener('load', handleLoad);
       
       if (element) {
         element.removeEventListener('wheel', handleWheel);

@@ -1,0 +1,197 @@
+/* Import or adapt styles from the follow/css directory */
+/* We'll need to copy the relevant CSS rules from the follow folder */
+
+.follow-container {
+  /* Container styles */
+}
+
+.follow-header {
+  /* Header styles */
+}
+
+.follow-main {
+  /* Main content styles */
+}
+
+.follow-footer {
+  /* Footer styles */
+}
+
+/* Additional styles from the follow CSS files */
+
+/* Base styles */
+html {
+  --color-bg: #E9DFCF;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html[data-loading] * {
+  transition: none !important;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  font-family: 'Inter Variable', sans-serif;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Utility classes */
+.scrollbar-hidden {
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.overlap {
+  display: grid;
+}
+
+.overlap > * {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s, visibility 0s 0.5s;
+}
+
+.overlap > *:first-child {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s;
+}
+
+/* Animation classes */
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade {
+  opacity: 0;
+  animation: fade both;
+  animation-range: contain;
+}
+
+@keyframes bottle {
+  from {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-bottle {
+  opacity: 0;
+  animation: bottle 1s both;
+  animation-range: contain;
+}
+
+@keyframes text {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-text {
+  opacity: 0;
+  animation: text 1s both;
+  animation-range: contain;
+  animation-delay: 0.2s;
+}
+
+@keyframes bg {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.animate-bg {
+  animation: bg 1s both;
+  animation-range: contain;
+}
+
+@keyframes progress {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-200%);
+  }
+}
+
+.animate-progress {
+  animation: progress linear both;
+  animation-range: 0 100%;
+  display: grid;
+}
+
+/* Demo 2 specific styles */
+.frame {
+  font-size: 0.875rem;
+}
+
+.frame a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.frame a[aria-current="page"] {
+  font-weight: 600;
+}
+
+/* Responsive styles */
+@media (min-width: 1024px) {
+  .frame {
+    font-size: 1rem;
+  }
+}
+
+/* Font imports */
+@import url('https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+/* If your app has a container that might limit the height */
+#root, .app-container {
+  min-height: 100vh;
+}
+
+/* Add this to your follow.css */
+.view--2 {
+  background-color: var(--color-bg, #E9DFCF) !important;
+  color: #2d2d2d !important;
+}
+
+/* Make sure the FollowPage takes up the full height of its container */
+.view--2 > div {
+  height: 100%;
+}
+
+/* Ensure the FollowPage doesn't inherit styles from the main app */
+.view--2 a {
+  color: inherit;
+}
+
+/* Fix z-index issues with the main app's navigation */
+.view--2 .frame {
+  z-index: 40;
+} 

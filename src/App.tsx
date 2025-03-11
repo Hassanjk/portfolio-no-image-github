@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ChevronDown, Smile } from 'lucide-react';
 import AboutMe from './pages/AboutMe';
 import Contact from './pages/Contact';
@@ -8,6 +8,7 @@ import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { useScrollStore } from './store/useScrollStore';
 import './styles/singleProject.css';
+import FollowPage from './pages/FollowPage';
 
 gsap.registerPlugin(Observer);
 
@@ -201,8 +202,8 @@ function AppContent() {
         </div>
 
         {/* View 2 - Blank black page */}
-        <div ref={view2Ref} className="view view--2 bg-black w-full h-screen">
-          {/* Blank page */}
+        <div ref={view2Ref} className="view view--2 w-full h-screen overflow-hidden">
+          <FollowPage />
         </div>
 
         <div ref={view3Ref} className="view view--3">
@@ -223,7 +224,10 @@ function AppContent() {
 function App() {
   return (
     <Router>
-      <AppContent />
+      <Routes>
+        <Route path="/" element={<AppContent />} />
+        <Route path="/follow" element={<FollowPage />} />
+      </Routes>
     </Router>
   );
 }

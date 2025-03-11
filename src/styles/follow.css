@@ -33,10 +33,7 @@ html[data-loading] * {
 
 body {
   margin: 0;
-  background-color: var(--color-bg);
-  min-height: 100vh;
-  font-family: 'Inter Variable', sans-serif;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  color: #2d2d2d;
 }
 
 /* Utility classes */
@@ -145,6 +142,47 @@ body {
   display: grid;
 }
 
+/* Font styles */
+.font-serif {
+  font-family: 'Cardo', serif;
+}
+
+/* Fix for the view--2 container */
+.view--2 {
+  background-color: #E9DFCF !important;
+  color: #2d2d2d !important;
+}
+
+.view--2 > div {
+  height: 100%;
+}
+
+/* Ensure the FollowPage doesn't inherit styles from the main app */
+.view--2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .overlap > * {
+    max-width: 100%;
+  }
+  
+  .animate-text {
+    font-size: 90%;
+  }
+}
+
+/* JavaScript fallback for browsers without scroll-driven animations */
+@supports not (animation-timeline: scroll()) {
+  .js-active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+  }
+}
+
 /* Demo 2 specific styles */
 .frame {
   font-size: 0.875rem;
@@ -194,4 +232,53 @@ body {
 /* Fix z-index issues with the main app's navigation */
 .view--2 .frame {
   z-index: 40;
+}
+
+/* Add these styles to the bottom of your follow.css file */
+
+/* Ensure the scroll container is properly set up */
+.lg\:absolute.scrollbar-hidden {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure the text transitions work properly */
+.animate-text {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Fix for the overlap class to ensure proper transitions */
+.overlap > * {
+  transition: opacity 0.5s ease, visibility 0s 0.5s;
+}
+
+/* Ensure the bottle animations work properly */
+.animate-bottle {
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Polyfill for browsers that don't support scroll-driven animations */
+@supports not (animation-timeline: scroll()) {
+  .animate-text, .animate-bottle, .animate-bg, .animate-fade {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .overlap > * {
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .overlap > *:first-child {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Add JavaScript-based animation fallback */
+  .js-active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+  }
 } 

@@ -1,284 +1,175 @@
-/* Import or adapt styles from the follow/css directory */
-/* We'll need to copy the relevant CSS rules from the follow folder */
+@import "../../follow/css/shared.css";
+@import "@fontsource-variable/inter";
+@import "@fontsource/cardo/latin-400.css";
+@import "@fontsource/cardo/latin-400-italic.css";
 
-.follow-container {
-  /* Container styles */
-}
+@layer utilities {
+    .animate-bottle {
+        animation: bottle linear both;
+        
+        @media screen(lg) {
+            animation-name: bottle-lg;
+        }
+    }
 
-.follow-header {
-  /* Header styles */
-}
+    .animate-bg {
+        animation: bg linear both;
+    }
 
-.follow-main {
-  /* Main content styles */
-}
+    .animate-page {
+        animation: page linear both;
+    }
 
-.follow-footer {
-  /* Footer styles */
-}
+    .animate-fade {
+        animation: fade linear both;
+    }
 
-/* Additional styles from the follow CSS files */
+    .animate-progress {
+        animation: progress linear both;
+    }
 
-/* Base styles */
-html {
-  --color-bg: #E9DFCF;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+    .animate-text {
+        animation: text linear both;
+        
+        @media screen(lg) {
+            animation-name: text-lg;
+        }
 
-html[data-loading] * {
-  transition: none !important;
-}
+        @media screen(3xl) {
+            animation-name: text-3xl;
+        }
+    }
 
-body {
-  margin: 0;
-  color: #2d2d2d;
-}
+    @keyframes bottle {
+        0% {
+            transform: scale(0.65)
+        }
+        50% {
+            transform: translateY(3rem);
+        }
+        100% {
+            transform: scale(0.65);
+        }
+    }
 
-/* Utility classes */
-.scrollbar-hidden {
-  scrollbar-width: none;
-}
+    @keyframes bottle-lg {
+        0% {
+            transform: scale(0.65)
+        }
+        50% {
+            transform: translateY(3rem);
+        }
+        100% {
+            transform: scale(0.65) translateX(-40%);
+        }
+    }
 
-.scrollbar-hidden::-webkit-scrollbar {
-  display: none;
+    @keyframes bg {
+        0% {
+            opacity: 0;
+            transform: scale(1.2)
+        }
+        50% {
+            opacity: 1;
+            transform: none
+        }
+        100% {
+            transform: scale(0.8)
+        }
+    }
+
+    @keyframes page {
+        0%, 100% {
+            opacity: 0.5
+        }
+        58% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes progress {
+        100% {
+            transform: translateY(calc((var(--slides) - 1) * -100%));
+        }
+    }
+
+    @keyframes fade {
+        0% {
+            opacity: 0
+        }
+        50% {
+            opacity: 1
+        }
+    }
+
+    @keyframes text {
+        0%, 25% {
+            opacity: 0;
+            transform: translateX(50%);
+        }
+        50% {
+            opacity: 1;
+            transform: none;
+        }
+        75%, 100% {
+            opacity: 0;
+            transform: translateX(-50%);
+        }
+    }
+
+    @keyframes text-lg {
+        0%, 40% {
+            opacity: 0;
+            transform: translateX(50%);
+        }
+        50% {
+            opacity: 1;
+            transform: none;
+        }
+        60%, 100% {
+            opacity: 0;
+            transform: translateX(-50%);
+        }
+    }
+
+    @keyframes text-3xl {
+        0%, 25% {
+            opacity: 0;
+            transform: translateX(calc(25cqw + 50%));
+        }
+        50% {
+            opacity: 1;
+            transform: none;
+        }
+        75%, 100% {
+            opacity: 0;
+            transform: translateX(calc(-50% - 25cqw));
+        }
+    }
 }
 
 .overlap {
-  display: grid;
+    display: grid;
 }
 
 .overlap > * {
-  grid-area: 1 / 1;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s, visibility 0s 0.5s;
+    grid-area: overlap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0s 0.5s;
 }
 
 .overlap > *:first-child {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.5s;
-}
-
-/* Animation classes */
-@keyframes fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-fade {
-  opacity: 0;
-  animation: fade both;
-  animation-range: contain;
-}
-
-@keyframes bottle {
-  from {
-    opacity: 0;
-    transform: translateY(20%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-bottle {
-  opacity: 0;
-  animation: bottle 1s both;
-  animation-range: contain;
-}
-
-@keyframes text {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-text {
-  opacity: 0;
-  animation: text 1s both;
-  animation-range: contain;
-  animation-delay: 0.2s;
-}
-
-@keyframes bg {
-  from {
-    transform: scale(1.1);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-.animate-bg {
-  animation: bg 1s both;
-  animation-range: contain;
-}
-
-@keyframes progress {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-200%);
-  }
-}
-
-.animate-progress {
-  animation: progress linear both;
-  animation-range: 0 100%;
-  display: grid;
-}
-
-/* Font styles */
-.font-serif {
-  font-family: 'Cardo', serif;
-}
-
-/* Fix for the view--2 container */
-.view--2 {
-  background-color: #E9DFCF !important;
-  color: #2d2d2d !important;
-}
-
-.view--2 > div {
-  height: 100%;
-}
-
-/* Ensure the FollowPage doesn't inherit styles from the main app */
-.view--2 a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* Responsive styles */
-@media (max-width: 1024px) {
-  .overlap > * {
-    max-width: 100%;
-  }
-  
-  .animate-text {
-    font-size: 90%;
-  }
-}
-
-/* JavaScript fallback for browsers without scroll-driven animations */
-@supports not (animation-timeline: scroll()) {
-  .js-active {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
-  }
-}
-
-/* Demo 2 specific styles */
-.frame {
-  font-size: 0.875rem;
-}
-
-.frame a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.frame a[aria-current="page"] {
-  font-weight: 600;
-}
-
-/* Responsive styles */
-@media (min-width: 1024px) {
-  .frame {
-    font-size: 1rem;
-  }
-}
-
-/* Font imports */
-@import url('https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-
-/* If your app has a container that might limit the height */
-#root, .app-container {
-  min-height: 100vh;
-}
-
-/* Add this to your follow.css */
-.view--2 {
-  background-color: var(--color-bg, #E9DFCF) !important;
-  color: #2d2d2d !important;
-}
-
-/* Make sure the FollowPage takes up the full height of its container */
-.view--2 > div {
-  height: 100%;
-}
-
-/* Ensure the FollowPage doesn't inherit styles from the main app */
-.view--2 a {
-  color: inherit;
-}
-
-/* Fix z-index issues with the main app's navigation */
-.view--2 .frame {
-  z-index: 40;
-}
-
-/* Add these styles to the bottom of your follow.css file */
-
-/* Ensure the scroll container is properly set up */
-.lg\:absolute.scrollbar-hidden {
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Ensure the text transitions work properly */
-.animate-text {
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-/* Fix for the overlap class to ensure proper transitions */
-.overlap > * {
-  transition: opacity 0.5s ease, visibility 0s 0.5s;
-}
-
-/* Ensure the bottle animations work properly */
-.animate-bottle {
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-/* Polyfill for browsers that don't support scroll-driven animations */
-@supports not (animation-timeline: scroll()) {
-  .animate-text, .animate-bottle, .animate-bg, .animate-fade {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-  
-  .overlap > * {
-    opacity: 0;
-    visibility: hidden;
-  }
-  
-  .overlap > *:first-child {
     opacity: 1;
     visibility: visible;
-  }
-  
-  /* Add JavaScript-based animation fallback */
-  .js-active {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
-  }
-} 
+    transition: opacity 0.5s;
+}
+
+.scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}

@@ -7,7 +7,7 @@
     .animate-bottle {
         animation: bottle linear both;
         
-        @media screen(lg) {
+        @media (min-width: 1024px) {
             animation-name: bottle-lg;
         }
     }
@@ -31,11 +31,11 @@
     .animate-text {
         animation: text linear both;
         
-        @media screen(lg) {
+        @media (min-width: 1024px) {
             animation-name: text-lg;
         }
 
-        @media screen(3xl) {
+        @media (min-width: 1920px) {
             animation-name: text-3xl;
         }
     }
@@ -159,8 +159,8 @@
     transition: opacity 0.5s, visibility 0s 0.5s;
 }
 
-.overlap > *:first-child {
-    opacity: 1;
+.overlap > *.active {
+    opacity: 1;                                   
     visibility: visible;
     transition: opacity 0.5s;
 }
